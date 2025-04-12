@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "PublishingHouse",
+      "dynamicId": null
+    },
+    "redis1": {
+      "type": "redis",
+      "connectionId": "redis",
+      "dynamicId": null
+    }
+  }
+}
