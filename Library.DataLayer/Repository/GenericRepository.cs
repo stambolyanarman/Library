@@ -52,8 +52,21 @@ namespace Library.DataLayer.Repository
                 return null;
             }
 
-            _context.Entry(existingEntity).CurrentValues.SetValues(entity);
-            return existingEntity;
+            var entityType = typeof(T);
+            var idProperty = entityType.GetProperty("Id");
+            if (idProperty != null)
+            {
+                var existingId = idProperty.GetValue(existingEntity);
+                idProperty.SetValue(entity, existingId);
+            }
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+           
+
+            return entity;
         }
+
     }
 }

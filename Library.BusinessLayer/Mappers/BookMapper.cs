@@ -1,8 +1,8 @@
-﻿using Library.DTOs.Author;
+﻿using Library.BusinessLayer.DTOs.Book;
 using Library.DTOs.Book;
 using Library.Models;
 
-namespace Library.Mappers
+namespace Library.BusinessLayer.Mappers
 {
     public static class BookMapper
     {
@@ -27,7 +27,8 @@ namespace Library.Mappers
         {
             return new Book
             {
-                Title = bookDto.Title
+                Title = bookDto.Title,
+                AuthorId = bookDto.AuthorId
             };
         }
     }

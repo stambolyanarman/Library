@@ -1,78 +1,54 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.AspNetCore.Mvc;
 using Library.DTOs.Book;
-using Library.Mappers;
-using Library.UnitOfWorks;
+using Library.BusinessLayer.Interfaces;
+using Library.BusinessLayer.DTOs.Book;
+using Library.BusinessLayer.Mappers;
 
-namespace Library.Controllers
+
+namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IDistributedCache _cache;
-        public BooksController(IUnitOfWork unitOfWork, IDistributedCache cache)
+        private readonly IBooksService _service;
+        public BooksController(IBooksService service)
         {
-            _unitOfWork = unitOfWork;
-            _cache = cache;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
-            var books = await _unitOfWork.BookRepository.GetAllAsync();
-            var bookDto = books.Select(x => x.ToBookDto());
-            return Ok(bookDto);
+            return Ok(await _service.GetBooks());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBook(int id)
         {
-            var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
-            
-            await _cache.SetStringAsync(book.Id.ToString(), JsonSerializer.Serialize(book), new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = DateTime.Now.AddSeconds(10)
-            });
-            var value = await _cache.GetStringAsync(book.Id.ToString());
+            var book = await _service.GetBook(id);
             if (book == null)
             {
                 return NotFound();
             }
-            return Ok(value);
-
+            return Ok(book);
         }
         [HttpPost("{authorId}")]
         public async Task<IActionResult> PostBook(int authorId,CreatBookRequestDto creatDto)
         {
-            if (!await _unitOfWork.AuthorRepository.AuthorExistsAsync(authorId))
-            {
-                return BadRequest();
-            }
-            var book = creatDto.ToBookFromCreatDto(authorId);
-            await _unitOfWork.BookRepository.CreatAsync(book);
-            await _unitOfWork.SaveAsync();
+            var book = await _service.CreateBook(authorId, creatDto);
             return CreatedAtAction(nameof(GetBook), new{ id = book.Id}, book.ToBookDto());
         }
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> PutBook([FromRoute] int id, [FromBody] UpdateBookRequestDto updateDto)
         {
-            var book = await _unitOfWork.BookRepository.UpdateAsync(id, updateDto.ToBookFromUpdateDto());
-            await _unitOfWork.SaveAsync();
-            if(book == null)
-            {
-                return NotFound();
-            }
-            return Ok(book.ToBookDto());
+            return Ok(await _service.UpdateBook(id, updateDto));
         }
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeteleBook([FromRoute] int id)
         {
-            await _unitOfWork.BookRepository.DeleteAsync(id);
-            await _unitOfWork.SaveAsync();
+            await _service.DeleteBook(id);
             return NoContent();
         }
 
