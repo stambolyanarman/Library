@@ -1,4 +1,4 @@
-﻿using Library.DTOs.Author;
+﻿using Library.BusinessLayer.DTOs.Author;
 using Library.Models;
 
 namespace Library.BusinessLayer.Interfaces

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Library.DTOs.Book;
 using Library.BusinessLayer.Interfaces;
 using Library.BusinessLayer.DTOs.Book;
 using Library.BusinessLayer.Mappers;
@@ -9,13 +8,9 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class BooksController(IBooksService service) : ControllerBase
     {
-        private readonly IBooksService _service;
-        public BooksController(IBooksService service)
-        {
-            _service = service;
-        }
+        private readonly IBooksService _service = service;
 
         [HttpGet]
         public async Task<IActionResult> GetBooks()

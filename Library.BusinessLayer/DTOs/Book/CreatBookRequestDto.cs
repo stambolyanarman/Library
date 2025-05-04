@@ -1,7 +1,5 @@
-﻿namespace Library.DTOs.Book
+﻿namespace Library.BusinessLayer.DTOs.Book
 {
-    public class CreatBookRequestDto
-    {
-        public string? Title { get; set; }
-    }
+    public record CreatBookRequestDto(string? Title);
+
 }

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Library.Data;
 using Library.Interfaces;
 using Library.UnitOfWorks;
@@ -34,7 +34,6 @@ builder.Services.AddStackExchangeRedisCache(option =>
 {
     option.Configuration = builder.Configuration["redis"];
 });
-
 
 var app = builder.Build();
 

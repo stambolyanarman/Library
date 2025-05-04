@@ -1,7 +1,4 @@
-﻿namespace Library.DTOs.Author
+﻿namespace Library.BusinessLayer.DTOs.Author
 {
-    public class CreatAuthorRequestDto
-    {
-        public string? Name { get; set; }
-    }
+    public record CreatAuthorRequestDto(string? Name);
 }

@@ -3,15 +3,12 @@ using System.Text.Json;
 using FluentValidation;
 
 
-namespace Library.Middleware
+namespace Library.Api.Middleware
 {
-    public class ExceptionHandler
+    public class ExceptionHandler(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public ExceptionHandler(RequestDelegate next)
-        {
-            _next = next;
-        }
+        private readonly RequestDelegate _next = next;
+
         public async Task Invoke(HttpContext context)
         {
             try

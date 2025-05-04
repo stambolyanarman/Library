@@ -1,4 +1,4 @@
-﻿namespace Library.DTOs.Book
+﻿namespace Library.BusinessLayer.DTOs.Book
 {
     public class BookDto
     {

@@ -1,8 +1,7 @@
-﻿using Library.BusinessLayer.Mappers;
-using Library.DTOs.Author;
+﻿using Library.BusinessLayer.DTOs.Author;
 using Library.Models;
 
-namespace Library.Mappers
+namespace Library.BusinessLayer.Mappers
 {
     public static class AuthorMapper
     {

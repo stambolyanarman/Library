@@ -1,9 +1,4 @@
-﻿using Library.Models;
-
-namespace Library.DTOs.Author
+﻿namespace Library.BusinessLayer.DTOs.Author
 {
-    public class UpdateAuthorRequestDto
-    {
-        public string? Name { get; set; }
-    }
+    public record UpdateAuthorRequestDto(string? Name);
 }

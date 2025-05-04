@@ -1,4 +1,4 @@
-﻿namespace Library.Middleware
+﻿namespace Library.Api.Middleware
 {
     public static class ExceptionHandlerExtentions
     {

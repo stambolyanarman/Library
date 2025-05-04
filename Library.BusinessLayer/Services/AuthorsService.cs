@@ -1,6 +1,6 @@
-﻿using Library.BusinessLayer.Interfaces;
-using Library.DTOs.Author;
-using Library.Mappers;
+﻿using Library.BusinessLayer.DTOs.Author;
+using Library.BusinessLayer.Interfaces;
+using Library.BusinessLayer.Mappers;
 using Library.Models;
 using Library.UnitOfWorks;
 

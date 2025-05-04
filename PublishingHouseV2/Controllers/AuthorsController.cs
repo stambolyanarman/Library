@@ -1,20 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Library.DTOs.Author;
-using Library.Mappers;
 using Library.BusinessLayer.Interfaces;
+using Library.BusinessLayer.DTOs.Author;
+using Library.BusinessLayer.Mappers;
 
 namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase 
+    public class AuthorsController(IAuthorsService service) : ControllerBase 
     {
-        private readonly IAuthorsService _service;
-
-        public AuthorsController(IAuthorsService service)
-        {
-            _service = service;
-        }
+        private readonly IAuthorsService _service = service;
 
         [HttpGet]
         public async Task<IActionResult> GetAuthors()
